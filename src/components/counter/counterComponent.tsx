@@ -4,45 +4,38 @@ interface CounterComponentProps {
     name: string,
     point: number,
     children: ReactNode,
-    onDelete: Function
+    onDelete: Function,
+    onIncrement: Function,
 }
 
-interface CounterComponentState {
-    count: number
-}
-
-class CounterComponent extends React.Component<CounterComponentProps, CounterComponentState> {
-    state = {
-        count: this.props.point
-    }
+class CounterComponent extends React.Component<CounterComponentProps> {
     style = {
     }
 
     render() {
         let countLabelClass = this.getCountLabelClassName();
+        /** destructuring */
+        const {children, onIncrement, onDelete} = this.props;
         return (
             <div>
                 <div>
-                    {this.props.children}
+                    {children}
                 </div>
                 <span style={this.style} className={countLabelClass}>{this.getCount()}</span>
-                <button className="btn btn-success btn-sm" onClick={this.increment}>Increament</button>
-                <button className="btn btn-danger btn-sm" onClick={() => this.props.onDelete()}>Delete</button>
+                <button className="btn btn-success btn-sm" onClick={() => onIncrement()}>Increament</button>
+                <button className="btn btn-danger btn-sm" onClick={() => onDelete()}>Delete</button>
             </div>
         );
     }
 
-    increment = (): void => {
-        this.setState({ count: this.state.count + 1 })
-    }
 
     getCount = (): number | string => {
-        return this.state.count > 0 ? this.state.count : "zero"
+        return this.props.point > 0 ? this.props.point : "zero"
     }
 
     private getCountLabelClassName() {
         let countLabelClass = "btn btn-";
-        countLabelClass += this.state.count > 0 ? "primary" : "warning";
+        countLabelClass += this.props.point > 0 ? "primary" : "warning";
         return countLabelClass;
     }
 }

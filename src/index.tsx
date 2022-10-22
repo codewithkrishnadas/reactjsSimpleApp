@@ -14,7 +14,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <CountersComponent />
+    <App />
   </React.StrictMode>
 );
 
